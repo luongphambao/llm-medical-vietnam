@@ -9,8 +9,9 @@ newline = '\n'
 labels = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F'}
 chars = "ABCDEF"
 
+question_id =0
 for index, row in df.iterrows():
-    if index == 10:
+    if index == 35:
         break
     options = [str(p) for p in row.loc[['option_' + str(i) for i in range(1,7)]] if str(p) != 'nan']
     options = [labels[i] + '. ' + p if not p.startswith(f'{labels[i]}.') else p for i, p in enumerate(options)]

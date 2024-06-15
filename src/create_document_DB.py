@@ -6,9 +6,9 @@ from pyvi.ViTokenizer import tokenize
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 #embed_model_id = 'sentence-transformers/all-MiniLM-L6-v2'
 embed_model_id = 'BAAI/bge-m3'
-
-#device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
-device = 'cpu'
+embed_model_id = 'VoVanPhuc/sup-SimCSE-VietNamese-phobert-base'
+device = f'cuda:{cuda.current_device()}' if cuda.is_available() else 'cpu'
+#device = 'cpu'
 cache_dir = "cache/"
 
 DB_SAVE_NAME = f"endoc_{embed_model_id.split('/')[-1].replace('.','-')}"
@@ -86,6 +86,6 @@ D. Rụng tóc
 result = loaded_db.similarity_search(query=query, k=1)
 print(result)
 context = result[0].page_content
-with open("context.txt", "w") as f:
+with open("context_sample.txt", "w") as f:
     f.write(context)
 print(context)

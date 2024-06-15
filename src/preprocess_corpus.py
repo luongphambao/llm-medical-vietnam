@@ -216,5 +216,22 @@ def main():
             print(f"Error at index {i} with document name {document_name}")
             error_indices.append(i)
             continue
+    for i in tqdm(error_indices, desc="Processing error documents"):
+        try:
+            document_name = document_names[i]
+            document_path = os.path.join(corpus_dir, document_name)
+            
+            html_src = open(document_path, "r").read()
+            processed_document = preprocess_eror_html_source_document(html_src)
+            processed_document["name"] = document_name
+
+            processed_save_path = os.path.join(processed_save_dir, document_name + ".json")
+            with open(processed_save_path, "w") as f:
+                json.dump(processed_document, f, indent=4, ensure_ascii=False)
+            print(f'Write at {processed_save_path}')
+        except Exception as e:
+            print(e)
+            print(f"Error at index {i} with document name {document_name}")
+            continue
 if __name__ == "__main__":
     main()

@@ -22,6 +22,8 @@ text_loader_kwargs={'autodetect_encoding': True}
 loader = DirectoryLoader(path, loader_cls = TextLoader, loader_kwargs=text_loader_kwargs)
 docs = loader.load()
 from bs4 import BeautifulSoup
+
+def load
 for doc in docs:
     soup = BeautifulSoup(doc.page_content, 'html.parser')
     doc.page_content = soup.get_text()
