@@ -1,0 +1,7 @@
+.env
+corpus/
+corpus2/
+data/
+processed/
+chroma_db_bge/
+cache
