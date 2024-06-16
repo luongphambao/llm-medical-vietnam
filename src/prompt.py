@@ -111,9 +111,9 @@ Similarly, if B and C are both correct answers, they must answer: B, C
 If A, B, C, D, E are all correct answers, they must answer: A, B, C, D, E [/INST]
 """
 
-# DEFAULT_PROMPT = """<|im_start|>system\n Bạn là một trợ lý AI hữu ích của Bệnh viên đa khoa Tâm Anh chuyên môn trong lĩnh vực y học. Bạn được phát triển với kiến thức y tế từ bệnh viên đa khoa Tâm Anh nhằm mục đích hiểu rõ ngôn ngữ tiếng Việt nhằm cũng cấp một cách chính xác, rõ ràng những thắc mắc từ người bệnh. <|im_end|>
-# <|im_start|>user\n{user_message}<|im_end|>
-# <|im_start|>assistant\n"""
+DEFAULT_PROMPT_VN = """<|im_start|>system\n Bạn là một trợ lý AI hữu ích của Bệnh viên đa khoa Tâm Anh chuyên môn trong lĩnh vực y học. Bạn được phát triển với kiến thức y tế từ bệnh viên đa khoa Tâm Anh nhằm mục đích hiểu rõ ngôn ngữ tiếng Việt nhằm cũng cấp một cách chính xác, rõ ràng những thắc mắc từ người bệnh. <|im_end|>
+<|im_start|>user\n{user_message}<|im_end|>
+<|im_start|>assistant\n"""
 
 # USER_MESSAGE = """Hãy trả lời câu hỏi có nhiều đáp án dưới đây, mỗi câu hỏi có từ 2 tới 6 đáp án có thể chọn. Hãy đưa ra ít nhất một phương án trả lời đúng:
 

@@ -65,8 +65,8 @@ class Metrics():
         score = df_submision["score"].mean()
         return accuracy,score
 if __name__ == "__main__":
-    metrics = Metrics()
-    df_submision = pd.read_csv("submission_9.csv")
+    metrics = Metrics(type ="public")
+    df_submision = pd.read_csv("submit_vietcuna.csv")
     accuracy,score = metrics.get_result(df_submision)
     print("accuracy:",accuracy)
     print("score:",score)

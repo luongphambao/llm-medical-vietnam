@@ -14,6 +14,7 @@ load_dotenv(".env")
 
 def main():
     google_api_key = os.getenv("GOOGLE_API_KEY")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
     corpus_path = 'corpus/'
     docs,texts = load_corpus(corpus_path)
     print("Loaded corpus")
@@ -25,7 +26,10 @@ def main():
     print("Loaded search")
     df = pd.read_csv("data/public_test.csv")
     result = {"id": [], "answer": []}
-    model = LLM(google_api_key=google_api_key)
+    #model = LLM(google_api_key=google_api_key)
+    #model = LLM(openai_api_key=openai_api_key)
+    model_name ="bdx0/vietcuna"
+    model = LLM(model_name=model_name,ollama_use=True)
     print("Loaded model")
     for index, row in tqdm(df.iterrows()):
         result["id"].append(row["id"].strip())
@@ -39,7 +43,7 @@ def main():
         print(output_json)
         result["answer"].append(output_json)
     newdf = pd.DataFrame(result, dtype=str)
-    newdf.to_csv("submit.csv", index=False)
+    newdf.to_csv("submit_vietcuna.csv", index=False)
 # query ="Đàn ông có thể bị mắc ung thư vú không?"
 # vertor_result_docs = search.hybrid_search(query)
 # print(vertor_result_docs[0].page_content)
