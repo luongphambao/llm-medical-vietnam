@@ -37,16 +37,21 @@ class Searching:
     def vector_search(self,query):
         vector_docs = self.retriever.get_relevant_documents(query)
         return vector_docs
-
-corpus_path = 'corpus/'
-docs,texts = load_corpus(corpus_path)
-print("Loaded corpus")
-splits =texts 
-embedding = Embedding(model_name="BAAI/bge-m3", device='cpu', cache_dir="cache/", persist_directory="chroma_db_bge")
-vectordb = embedding.load_embedding()
-print("Loaded embedding")
-search = Searching(1,1,vectordb,splits)
-print("Loaded search")
-query ="Đàn ông có thể bị mắc ung thư vú không?"
-vertor_result_docs = search.hybrid_search(query)
-print(vertor_result_docs[0].page_content)
+    def get_context(self,docs):
+        context = []
+        for doc in docs:
+            context.append(doc.page_content)
+        return context
+def main():
+    corpus_path = 'corpus/'
+    docs,texts = load_corpus(corpus_path)
+    print("Loaded corpus")
+    splits =texts 
+    embedding = Embedding(model_name="BAAI/bge-m3", device='cpu', cache_dir="cache/", persist_directory="chroma_db_bge")
+    vectordb = embedding.load_embedding()
+    print("Loaded embedding")
+    search = Searching(1,1,vectordb,splits)
+    print("Loaded search")
+    query ="Đàn ông có thể bị mắc ung thư vú không?"
+    vertor_result_docs = search.hybrid_search(query)
+    print(vertor_result_docs[0].page_content)

@@ -25,6 +25,7 @@ class Medical_Data:
         df_private = self.load_private_data()
         df = pd.concat([df_public, df_private], axis=0)
         return df
+    
 if __name__ == "__main__":
     data_class = Medical_Data('data/')
     public_data = data_class.load_public_data()
