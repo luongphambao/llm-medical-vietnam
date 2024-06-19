@@ -5,3 +5,4 @@ data/
 processed/
 chroma_db_bge/
 cache
+__pycache__/
