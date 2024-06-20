@@ -1,4 +1,4 @@
-import os, openai, logging, configparser
+import os, openai, logging, configparser,json,re
 from chain_of_density.chat_completion import make_chat_completion_request
 from chain_of_density.msg_templates import create_system_message
 
@@ -30,7 +30,10 @@ def load_file(input_file_path):
     else:
         raise FileNotFoundError(f"Input file not found at path: {input_file_path}")
 
-
+def clean_json_string(json_string):
+    pattern = r'^```json\s*(.*?)\s*```$'
+    cleaned_string = re.sub(pattern, r'\1', json_string, flags=re.DOTALL)
+    return cleaned_string.strip()
 def main():
     #logger.info("main() starting")
 
@@ -41,7 +44,7 @@ def main():
     msg = create_system_message(config)
 
     # Load input file
-    input_text = load_file("prompt_sample.txt")
+    input_text = load_file("corpus/benh-gout")
 
     msg.append(
         {
@@ -54,7 +57,10 @@ def main():
     # print(completion)
     # print()
     content = completion.choices[0].message.content
-
+    content = clean_json_string(content)
+    json_data = json.loads(content)
+    with open("output.json", "w") as f:
+        json.dump(json_data, f, indent=4)
     # Write the output to file
     with open(config["DEFAULT"]["OUTPUT_FILE"], "w") as f:
         f.write(content)
