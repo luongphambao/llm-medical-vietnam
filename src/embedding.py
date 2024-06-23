@@ -4,6 +4,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import TextLoader
 from langchain.document_loaders import DirectoryLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
 import os 
@@ -11,14 +12,20 @@ from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddi
 from dotenv import load_dotenv
 from utils import get_text_from_html_file, get_text_chunks,load_corpus
 
+load_dotenv(".env")
+os.environ['GOOGLE_API_KEY'] = os.getenv("GOOGLE_API_KEY")
 class Embedding:
     def __init__(self, model_name=None, device="cpu", cache_dir=None, persist_directory="openai",openai_api_key=None):
         self.model_name = model_name
         self.device = device
         self.cache_dir = cache_dir
         self.persist_directory = persist_directory
-        if openai_api_key:
+        self.openai_api_key = openai_api_key
+        print(self.model_name)
+        if self.model_name == "openai" and openai_api_key is not None:
             self.embed_model = OpenAIEmbeddings(api_key=openai_api_key)
+        elif self.model_name == "google":
+            self.embed_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         else:
             self.embed_model = SentenceTransformerEmbeddings(
                 model_name=model_name,
@@ -26,6 +33,7 @@ class Embedding:
                 encode_kwargs={'batch_size': 16, "normalize_embeddings": True, "device": device},
                 cache_folder=cache_dir
             )
+        print(self.embed_model)
     def create_embedding(self,splits):
         vectordb = Chroma.from_documents(documents=splits, embedding=self.embed_model,persist_directory=self.persist_directory)
         vectordb.persist()
@@ -47,11 +55,11 @@ def main():
     openai_api_key = os.getenv("OPENAI_API_KEY")
     corpus_path = 'corpus'
     docs,splits = load_corpus(corpus_path)
-    model_name = "openai"
+    model_name = "google"
     device = 'cpu'
     cache_dir = "cache/"
-    persist_directory = "chroma_db_openai"
-    embedding = Embedding(model_name, device, cache_dir, persist_directory,openai_api_key)
+    persist_directory = "chroma_db_google"
+    embedding = Embedding(model_name, device, cache_dir, persist_directory)
     vectordb = embedding.create_embedding(splits)
     query ="Các triệu chứng của bệnh cúm là gì?"
     k=3

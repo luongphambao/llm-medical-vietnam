@@ -47,11 +47,13 @@ def main():
     docs,texts = load_corpus(corpus_path)
     print("Loaded corpus")
     splits =texts 
-    embedding = Embedding(model_name="BAAI/bge-m3", device='cpu', cache_dir="cache/", persist_directory="chroma_db_bge")
+    embedding = Embedding(model_name="google", device='cpu', cache_dir="cache/", persist_directory="chroma_db_google")
     vectordb = embedding.load_embedding()
     print("Loaded embedding")
-    search = Searching(1,1,vectordb,splits)
+    search = Searching(3,3,vectordb,splits)
     print("Loaded search")
-    query ="Đàn ông có thể bị mắc ung thư vú không?"
-    vertor_result_docs = search.hybrid_search(query)
-    print(vertor_result_docs[0].page_content)
+    query ="Triệu chứng bệnh guts"
+    vertor_result_docs = search.vector_search(query)
+    print(vertor_result_docs[1].page_content)
+if __name__ ==main():
+    main()
