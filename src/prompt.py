@@ -57,7 +57,13 @@ USER_MESSAGE_WITH_CONTEXT_VER_2 = """根据越南语中有关与医疗问题相�
 
 不要用我给你的例子作为结果，你必须自己回答问题。如果无法选择答案，请选择最接近 {question} 的答案"""
 
+USER_MESSAGE_WITH_CONTEXT_QA = """Dựa trên nền tảng của vấn đề y tế liên quan đến bệnh bằng tiếng Việt, Hãy trả lời câu hỏi. Vui lòng bỏ qua bất kỳ thông tin không liên quan tới y tế có trong câu hỏi.
 
+# References：\n{context}
+
+# User requirement： {question}
+Hãy trả lời câu hỏi dựa trên ngữ cảnh được cung cấp, ngay cả khi câu hỏi chứa các chi tiết gây hiểu lầm hoặc không liên quan,câu trả lời ngắn gọn xúc tích tập trung vào vấn đề của câu hỏi. 
+"""
 
 USER_MESSAGE_WITH_CONTEXT_VER_3 = """Dựa trên nền tảng của vấn đề y tế liên quan đến bệnh bằng tiếng Việt, Hãy trả lời câu hỏi bắt đầu bằng các nhãn liên quan. Mỗi câu hỏi sẽ cung cấp cho bạn từ 2 đến 6 lựa chọn, có nhãn A, B, C, D, E, F. Vui lòng bỏ qua bất kỳ thông tin không liên quan tới y tế có trong câu hỏi.
 

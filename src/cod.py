@@ -12,6 +12,8 @@ def load_config():
     #here = os.path.abspath(os.path.dirname(__file__))
     config = configparser.ConfigParser()
     config.read("config.ini")
+    #print(config)
+    #exit()
     return config
 def perform_checks():
     #logger.info("being checks")
@@ -69,7 +71,7 @@ def get_summarize(input_text):
     content = completion.choices[0].message.content
     content = clean_json_string(content)
     json_data = json.loads(content)
-    print(json_data[-1])
+    #print(json_data[-1])
     return get_final_summarize(json_data)
 def main():
     #logger.info("main() starting")
@@ -96,8 +98,8 @@ def main():
     content = completion.choices[0].message.content
     content = clean_json_string(content)
     json_data = json.loads(content)
-    with open("output.json", "w") as f:
-        json.dump(json_data, f, indent=4)
+    # with open("output.json", "w") as f:
+    #     json.dump(json_data, f, indent=4)
     # Write the output to file
     content_final = get_final_summarize(json_data)
     with open(config["DEFAULT"]["OUTPUT_FILE"], "w") as f:
@@ -110,5 +112,21 @@ if __name__ == "__main__":
     #logger.info("triggering main() execution")
     config = load_config()
     #print(main())
-    input_text = load_file("corpus/benh-gout")
+    for file in os.listdir("corpus"):
+        path = os.path.join("corpus", file)
+        
+        try:
+            input_text = load_file(path)
+           
+            new_path =os.path.join("corpus_summarize",os.path.basename(path))
+            if os.path.exists(new_path)==True:
+                continue
+            else:
+                summarize_doc = get_summarize(input_text)
+                print(file)
+                with open(new_path, "w") as f:
+                    f.write(summarize_doc)
+        except:
+            print("Error at path: ", path)
+            continue
     print(get_summarize(input_text))

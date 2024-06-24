@@ -4,7 +4,10 @@ from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI 
 import ollama
-from prompt import *
+try:
+    from src.prompt import *
+except:
+    from prompt import *
 load_dotenv(".env")
 class LLM():
     def __init__(self,openai_api_key=None,google_api_key=None,temperature=0.1,model_name=None,ollama_use=False):
@@ -19,12 +22,14 @@ class LLM():
             self.llm = ChatOpenAI(temperature=temperature,openai_api_key=openai_api_key)
         if google_api_key is not None:
             self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=google_api_key)
-    def preprocess_prompt(self, question, choices, context=None):
+    def preprocess_prompt(self, question, choices=None, context=None):
+       
         user_message_ = USER_MESSAGE.format(question=question, answer_choices=choices)
         if context is not None:
             user_message_ = USER_MESSAGE_WITH_CONTEXT_VER_3.format(context=context, question=question,
                                                                    answer_choices=choices)
-        
+            if choices is None:
+                user_message_ = USER_MESSAGE_WITH_CONTEXT_QA.format(context=context, question=question)
         if self.ollama_use ==True:
             prompt = DEFAULT_PROMPT_VN.format(user_message=user_message_)
         else:
@@ -40,8 +45,8 @@ class LLM():
 if __name__ == "__main__":
     openai_api_key = os.getenv("OPENAI_API_KEY")
     google_api_key = os.getenv("GOOGLE_API_KEY")
-    #llm = LLM(openai_api_key=openai_api_key)
-    llm =LLM(model_name="bdx0/vietcuna",ollama_use=True)
+    llm = LLM(openai_api_key=openai_api_key)
+    #llm =LLM(model_name="bdx0/vietcuna",ollama_use=True)
     prompt ="""Việc sử dụng thuốc kháng sinh một cách tự tiện, quá liều lượng, không theo đơn có thể gây ra vấn đề nào?"""
     result = llm.generate(prompt)
     print(result)

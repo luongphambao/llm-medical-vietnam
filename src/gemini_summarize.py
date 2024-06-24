@@ -24,6 +24,9 @@ for file in os.listdir("corpus"):
     path = os.path.join("corpus", file)
     #path = "corpus/benh-dau-mua"
     doc =load_content(path)
+    new_path =os.path.join("corpus_summarize",os.path.basename(path))
+    if os.path.exists(new_path)==True:  
+        continue
     stuff_chain = (
         # Extract data from the documents and add to the key `text`.
         {
@@ -33,7 +36,8 @@ for file in os.listdir("corpus"):
         | llm                # Gemini function
         | StrOutputParser()  # output parser
     )
+    #print(doc)
     summarize_doc =stuff_chain.invoke(doc)
-    new_path =os.path.join("corpus_summarize",os.path.basename(path))
+    print(summarize_doc)
     with open(new_path, "w") as f:
         f.write(summarize_doc)

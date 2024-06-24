@@ -21,7 +21,7 @@ def load_corpus(corpus_path):
     for doc in docs:
         soup = BeautifulSoup(doc.page_content, 'html.parser')
         doc.page_content = soup.get_text()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     texts = text_splitter.split_documents(docs)
     return docs,texts
 def get_text_from_html_file(html_path):

@@ -8,10 +8,13 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
 import os 
+import torch
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from dotenv import load_dotenv
-from utils import get_text_from_html_file, get_text_chunks,load_corpus
-
+try:
+    from src.utils import get_text_from_html_file, get_text_chunks,load_corpus
+except:
+    from utils import get_text_from_html_file, get_text_chunks,load_corpus
 load_dotenv(".env")
 os.environ['GOOGLE_API_KEY'] = os.getenv("GOOGLE_API_KEY")
 class Embedding:
@@ -53,12 +56,13 @@ def main():
     from dotenv import load_dotenv
     load_dotenv(".env")
     openai_api_key = os.getenv("OPENAI_API_KEY")
-    corpus_path = 'corpus'
+    corpus_path = 'corpus_summarize'
     docs,splits = load_corpus(corpus_path)
-    model_name = "google"
-    device = 'cpu'
+    #Embedding(model_name="BAAI/bge-m3", device='cpu', cache_dir="cache/", persist_directory="chroma_db_bge")
+    model_name = "BAAI/bge-m3"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     cache_dir = "cache/"
-    persist_directory = "chroma_db_google"
+    persist_directory = "chroma_db_bge_v3"
     embedding = Embedding(model_name, device, cache_dir, persist_directory)
     vectordb = embedding.create_embedding(splits)
     query ="Các triệu chứng của bệnh cúm là gì?"

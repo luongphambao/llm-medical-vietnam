@@ -16,8 +16,12 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 load_dotenv(".env")
 openai_api_key = os.getenv('OPENAI_API_KEY')
 import ollama
-from utils import get_text_from_html_file, get_text_chunks,load_corpus
-from embedding import Embedding
+try:  
+    from src.utils import get_text_from_html_file, get_text_chunks,load_corpus
+    from src.embedding import Embedding
+except:
+    from utils import get_text_from_html_file, get_text_chunks,load_corpus
+    from embedding import Embedding
 model_id ="ontocord/vistral"
 
 class Searching:
@@ -42,18 +46,18 @@ class Searching:
         for doc in docs:
             context.append(doc.page_content)
         return context
-def main():
-    corpus_path = 'corpus/'
-    docs,texts = load_corpus(corpus_path)
-    print("Loaded corpus")
-    splits =texts 
-    embedding = Embedding(model_name="google", device='cpu', cache_dir="cache/", persist_directory="chroma_db_google")
-    vectordb = embedding.load_embedding()
-    print("Loaded embedding")
-    search = Searching(3,3,vectordb,splits)
-    print("Loaded search")
-    query ="Triệu chứng bệnh guts"
-    vertor_result_docs = search.vector_search(query)
-    print(vertor_result_docs[1].page_content)
-if __name__ ==main():
-    main()
+# def main():
+#     corpus_path = 'corpus/'
+#     docs,texts = load_corpus(corpus_path)
+#     print("Loaded corpus")
+#     splits =texts 
+#     embedding = Embedding(model_name="google", device='cpu', cache_dir="cache/", persist_directory="chroma_db_google")
+#     vectordb = embedding.load_embedding()
+#     print("Loaded embedding")
+#     search = Searching(1,1,vectordb,splits)
+#     print("Loaded search")
+#     query ="Triệu chứng bệnh guts"
+#     vertor_result_docs = search.vector_search(query)
+#     print(vertor_result_docs[0].page_content)
+# if __name__ ==__main__()
+#     main()
