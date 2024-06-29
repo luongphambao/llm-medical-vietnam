@@ -31,7 +31,7 @@ class Searching:
         self.retriever = vectordb.as_retriever(search_kwargs={"k": k1})
         self.bm25_retriever = BM25Retriever.from_documents(splits)
         self.bm25_retriever.k = k2
-        self.ensemble_retriever = EnsembleRetriever(retrievers=[self.bm25_retriever, self.retriever], weights=[0.3, 0.7])
+        self.ensemble_retriever = EnsembleRetriever(retrievers=[self.bm25_retriever, self.retriever], weights=[0.7, 0.3])
     def hybrid_search(self,query):
         ensemble_docs = self.ensemble_retriever.get_relevant_documents(query)
         return ensemble_docs

@@ -21,7 +21,7 @@ def load_corpus(corpus_path):
     for doc in docs:
         soup = BeautifulSoup(doc.page_content, 'html.parser')
         doc.page_content = soup.get_text()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=200,separators=["\n", "."])
     texts = text_splitter.split_documents(docs)
     return docs,texts
 def get_text_from_html_file(html_path):
@@ -105,3 +105,21 @@ def process_output(output, num_ans):
         res = res[:index_to_change] + "1" + res[index_to_change + 1:]
     print(res)
     return res
+
+if __name__== "__main__":
+    corpus_path = "corpus_summarize"
+    docs,texts = load_corpus(corpus_path)
+    print("len(docs):",len(docs))
+    print("len(texts):",len(texts))
+    print("texts[0]:",texts[0])
+    # test load_corpus
+    # corpus_path = "data/corpus"
+    # docs,texts = load_corpus(corpus_path)
+    # print("len(docs):",len(docs))
+    # print("len(texts):",len(texts))
+    # test get_text_from_html_file
+    # html_path = "data/corpus/0.html"
+    # text = get_text_from_html_file(html_path)
+    # print("text:",text)
+    # test get_text_chunks
+    # raw_text = "

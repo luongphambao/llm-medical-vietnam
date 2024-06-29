@@ -62,7 +62,7 @@ USER_MESSAGE_WITH_CONTEXT_QA = """Dựa trên nền tảng của vấn đề y t
 # References：\n{context}
 
 # User requirement： {question}
-Hãy trả lời câu hỏi dựa trên ngữ cảnh được cung cấp, ngay cả khi câu hỏi chứa các chi tiết gây hiểu lầm hoặc không liên quan,câu trả lời ngắn gọn xúc tích tập trung vào vấn đề của câu hỏi. 
+Hãy trả lời câu hỏi dựa trên ngữ cảnh được cung cấp kết hợp với kiến thức của bạn, ngay cả khi câu hỏi chứa các chi tiết gây hiểu lầm hoặc không liên quan,câu trả lời nên đầy đủ và có sự tư vấn cho bệnh nhân. 
 """
 
 USER_MESSAGE_WITH_CONTEXT_VER_3 = """Dựa trên nền tảng của vấn đề y tế liên quan đến bệnh bằng tiếng Việt, Hãy trả lời câu hỏi bắt đầu bằng các nhãn liên quan. Mỗi câu hỏi sẽ cung cấp cho bạn từ 2 đến 6 lựa chọn, có nhãn A, B, C, D, E, F. Vui lòng bỏ qua bất kỳ thông tin không liên quan tới y tế có trong câu hỏi.
@@ -117,7 +117,7 @@ Similarly, if B and C are both correct answers, they must answer: B, C
 If A, B, C, D, E are all correct answers, they must answer: A, B, C, D, E [/INST]
 """
 
-DEFAULT_PROMPT_VN = """<|im_start|>system\n Bạn là một trợ lý AI hữu ích của Bệnh viên đa khoa Tâm Anh chuyên môn trong lĩnh vực y học. Bạn được phát triển với kiến thức y tế từ bệnh viên đa khoa Tâm Anh nhằm mục đích hiểu rõ ngôn ngữ tiếng Việt nhằm cũng cấp một cách chính xác, rõ ràng những thắc mắc từ người bệnh. <|im_end|>
+DEFAULT_PROMPT_VN = """<|im_start|>system\n Bạn là một trợ lý AI hữu ích của Bệnh viên đa khoa Tâm Anh chuyên môn trong lĩnh vực y học. Bạn được phát triển với kiến thức y tế từ bệnh viên đa khoa Tâm Anh nhằm mục đích hiểu rõ ngôn ngữ tiếng Việt nhằm cũng cấp một cách chính xác, rõ ràng những thắc mắc từ người bệnh.,hãy trả lời như một bác sĩ tư vấn cho bệnh nhân <|im_end|>
 <|im_start|>user\n{user_message}<|im_end|>
 <|im_start|>assistant\n"""
 

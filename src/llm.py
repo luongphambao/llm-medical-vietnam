@@ -10,7 +10,7 @@ except:
     from prompt import *
 load_dotenv(".env")
 class LLM():
-    def __init__(self,openai_api_key=None,google_api_key=None,temperature=0.1,model_name=None,ollama_use=False):
+    def __init__(self,openai_api_key=None,google_api_key=None,temperature=0.4,model_name=None,ollama_use=False):
         self.openai_api_key = openai_api_key
         self.google_api_key = google_api_key
         self.temperature = temperature
@@ -21,7 +21,7 @@ class LLM():
         if openai_api_key is not None:
             self.llm = ChatOpenAI(temperature=temperature,openai_api_key=openai_api_key)
         if google_api_key is not None:
-            self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=google_api_key)
+            self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=google_api_key, temperature=temperature, max_tokens=4096)
     def preprocess_prompt(self, question, choices=None, context=None):
        
         user_message_ = USER_MESSAGE.format(question=question, answer_choices=choices)

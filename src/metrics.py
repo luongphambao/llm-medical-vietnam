@@ -66,7 +66,7 @@ class Metrics():
         return accuracy,score
 if __name__ == "__main__":
     metrics = Metrics(type ="public")
-    df_submision = pd.read_csv("submit_openai3.csv")
+    df_submision = pd.read_csv("submit_phogpt.csv")
     accuracy,score = metrics.get_result(df_submision)
     print("accuracy:",accuracy)
     print("score:",score)
