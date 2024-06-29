@@ -1,0 +1,17 @@
+openai 
+python-dotenv
+requests
+tqdm
+pandas 
+numpy
+gradio
+streamlit
+langchain
+langchain_community
+langchain_google_genai
+torch
+ollama 
+beautifulsoup4
+sentence-transformers
+chromadb
+rank_bm25
