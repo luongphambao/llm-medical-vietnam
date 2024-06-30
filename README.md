@@ -5,13 +5,13 @@ Project for starting LLM on medical data.
 ## 1. Introduction
 
 This project aims to build a Vietnamese healthcare chatbot leveraging advanced Retrieve-Augment-Generate (RAG) capabilities, such as Hybrid Search, Density Chain, and Re-ranking. The chatbot is designed to provide accurate and helpful health-related information and support.
-<p align="center">
-  <img width="800" alt="Gradio Interface" src="https://github.com/luongphambao/medical_llm/assets/127675330/c04580c5-d63e-4076-930d-350f0d520083">
-</p>
-<p align="center">
-  <em>Gradio Interface</em>
-</p>
+## Overall data architecture
 
+![](imgs/LLM.png)
+
+## Demo
+
+![](imgs/web.png)
 ### Key features:
 
 **🌟 Advanced RAG Capabilities:**  Utilizing Hybrid Search, Density Chain, and Re-ranking to enhance information retrieval and generation.
