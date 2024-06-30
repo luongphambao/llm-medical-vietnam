@@ -41,7 +41,19 @@ pip install -r requirements.txt
 ``` 
 python src/embedding.py   --model_name="BAAI/bge-m3" --cache_dir="cache/" --persist_directory="chroma_db_bge" --corpus_path="corpus_summarize"
 ```
-### Using Gradio 
+### Predict (generate answer for Kalapa competition)
+
+if you predict with opensource model, you can use the following command to start ollama server for serving the model.
+
+```
+ollama serve (you can install ollama based on the instruction in the following link: https://github.com/ollama/ollama)
+```
+
+Predict with the model
+``` 
+python3 src/predict.py --model_embedding_name="BAAI/bge-m3" --cache_dir="cache/" --persist_directory="chroma_db_bge" --corpus_path="corpus_summarize" --csv_path="data/public_test.csv" --output_path="submit.csv" --corpus_path="corpus_summarize" --model_name="BAAI/bge-m3"
+```
+### Demo Web 
 Add the OpenAI API KEY in the **.env** file.
 ```python
 OPENAI_API_KEY=sk-...
