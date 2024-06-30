@@ -13,7 +13,7 @@ import random
 load_dotenv()
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
-def load_corpus(corpus_path):
+def load_corpus(corpus_path,chunk_size=800,chunk_overlap=200):
     """load corpus from a directory of text files"""
     text_loader_kwargs={'autodetect_encoding': True}
     loader = DirectoryLoader(corpus_path, loader_cls = TextLoader, loader_kwargs=text_loader_kwargs)
@@ -21,7 +21,7 @@ def load_corpus(corpus_path):
     for doc in docs:
         soup = BeautifulSoup(doc.page_content, 'html.parser')
         doc.page_content = soup.get_text()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=200,separators=["\n", "."])
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap,separators=["\n", "."])
     texts = text_splitter.split_documents(docs)
     return docs,texts
 def get_text_from_html_file(html_path):
@@ -29,10 +29,10 @@ def get_text_from_html_file(html_path):
         html_text = f.read()
     soup = BeautifulSoup(html_text, "html.parser")
     return soup.get_text()
-def get_text_chunks(raw_text):
+def get_text_chunks(raw_text,chunk_size=1000,chunk_overlap=200):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
     )
     chunks = text_splitter.split_text(raw_text)
 
@@ -112,14 +112,3 @@ if __name__== "__main__":
     print("len(docs):",len(docs))
     print("len(texts):",len(texts))
     print("texts[0]:",texts[0])
-    # test load_corpus
-    # corpus_path = "data/corpus"
-    # docs,texts = load_corpus(corpus_path)
-    # print("len(docs):",len(docs))
-    # print("len(texts):",len(texts))
-    # test get_text_from_html_file
-    # html_path = "data/corpus/0.html"
-    # text = get_text_from_html_file(html_path)
-    # print("text:",text)
-    # test get_text_chunks
-    # raw_text = "

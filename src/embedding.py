@@ -1,4 +1,3 @@
-
 from langchain.document_loaders import DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import TextLoader
@@ -11,6 +10,11 @@ import os
 import torch
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from dotenv import load_dotenv
+import argparse
+from dotenv import load_dotenv
+load_dotenv(".env")
+openai_api_key = os.getenv("OPENAI_API_KEY")
+google_api_key = os.getenv("GOOGLE_API_KEY")
 try:
     from src.utils import get_text_from_html_file, get_text_chunks,load_corpus
 except:
@@ -24,7 +28,6 @@ class Embedding:
         self.cache_dir = cache_dir
         self.persist_directory = persist_directory
         self.openai_api_key = openai_api_key
-        print(self.model_name)
         if self.model_name == "openai" and openai_api_key is not None:
             self.embed_model = OpenAIEmbeddings(api_key=openai_api_key)
         elif self.model_name == "google":
@@ -46,28 +49,31 @@ class Embedding:
         vectordb.persist()
         return vectordb
     def load_embedding(self):
-        #vectordb = Chroma.load(self.persist_directory)
         vectordb = Chroma(persist_directory=self.persist_directory, embedding_function=self.embed_model)
         return vectordb
     def similarity_search(self, vectordb, query, k):
         results = vectordb.similarity_search(query=query, k=k)
         return results
+def parse_args():
+    parser = argparse.ArgumentParser(description="Embedding")
+    parser.add_argument("--model_name", type=str, default="BAAI/bge-m3", help="model name")
+    parser.add_argument("--cache_dir", type=str, default="cache/", help="cache directory")
+    parser.add_argument("--persist_directory", type=str, default="chroma_db_bge", help="persist directory")
+    parser.add_argument("--corpus_path", type=str, default="corpus_summarize", help="corpus path")
+    return parser.parse_args()
 def main():
-    from dotenv import load_dotenv
-    load_dotenv(".env")
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    corpus_path = 'corpus_summarize'
+    args = parse_args()
+    corpus_path = args.corpus_path
     docs,splits = load_corpus(corpus_path)
-    #Embedding(model_name="BAAI/bge-m3", device='cpu', cache_dir="cache/", persist_directory="chroma_db_bge")
-    model_name = "BAAI/bge-m3"
+    model_name = args.model_name
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    cache_dir = "cache/"
-    persist_directory = "chroma_db_bge_v3"
+    cache_dir = args.cache_dir
+    persist_directory = args.persist_directory
     embedding = Embedding(model_name, device, cache_dir, persist_directory)
     vectordb = embedding.create_embedding(splits)
-    query ="Các triệu chứng của bệnh cúm là gì?"
-    k=3
-    results = embedding.similarity_search(vectordb, query, k)
-    print(results)
+    # query ="Các triệu chứng của bệnh cúm là gì?"
+    # k=3
+    # results = embedding.similarity_search(vectordb, query, k)
+    # print(results)
 if __name__ == "__main__":
     main()

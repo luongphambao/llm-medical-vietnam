@@ -35,7 +35,13 @@ conda activate medical_llm
 ```
 pip install -r requirements.txt
 ```
-### Using Gradio
+
+### Create Embedding
+
+``` 
+python src/embedding.py   --model_name="BAAI/bge-m3" --cache_dir="cache/" --persist_directory="chroma_db_bge" --corpus_path="corpus_summarize"
+```
+### Using Gradio 
 Add the OpenAI API KEY in the **.env** file.
 ```python
 OPENAI_API_KEY=sk-...
