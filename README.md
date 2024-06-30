@@ -35,7 +35,11 @@ conda activate medical_llm
 ```
 pip install -r requirements.txt
 ```
-
+Add the OpenAI API KEY and GOOGLE API key in the **.env** file.
+```python
+OPENAI_API_KEY=sk-...
+GOOGLE_API_KEY=AI-...
+```
 ### Create Embedding
 
 ``` 
@@ -54,12 +58,12 @@ Predict with the model
 python3 src/predict.py --model_embedding_name="BAAI/bge-m3" --cache_dir="cache/" --persist_directory="chroma_db_bge" --corpus_path="corpus_summarize" --csv_path="data/public_test.csv" --output_path="submit.csv" --corpus_path="corpus_summarize" --model_name="BAAI/bge-m3"
 ```
 ### Demo Web 
-Add the OpenAI API KEY in the **.env** file.
-```python
-OPENAI_API_KEY=sk-...
-GOOGLE_API_KEY=AI-...
+
+you can run the **streamlit_app.py** file and a Streamlit interface will appear.
 ```
-Then, you can run the **app.py** file and a Gradio interface will appear.
+streamlit run streamlit_app.py
+```
+you can run the **app.py** file and a Gradio interface will appear.
 ```
 python -m  run app.py
 ```
