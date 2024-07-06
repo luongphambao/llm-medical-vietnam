@@ -33,6 +33,7 @@ class LLM():
         if self.ollama_use ==True:
             prompt = DEFAULT_PROMPT_VN.format(user_message=user_message_)
         else:
+        
             prompt = DEFAULT_PROMPT.format(user_message=user_message_)
         return prompt
     def generate(self,prompt):
