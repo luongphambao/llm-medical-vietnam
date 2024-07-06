@@ -18,9 +18,9 @@ class LLM():
         self.ollama_use = ollama_use
         if ollama_use:
             self.llm = None
-        if openai_api_key is not None:
+        if model_name =="openai" and openai_api_key is not None:
             self.llm = ChatOpenAI(temperature=temperature,openai_api_key=openai_api_key)
-        if google_api_key is not None:
+        if google_api_key is not None and model_name =="google":
             self.llm = ChatGoogleGenerativeAI(model="gemini-pro", google_api_key=google_api_key, temperature=temperature, max_tokens=4096)
     def preprocess_prompt(self, question, choices=None, context=None):
        
