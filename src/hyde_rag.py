@@ -1,7 +1,7 @@
 # --- Setting API KEY ---
 import os
 
-os.environ['GOOGLE_API_KEY']='AIzaSyApejrG65DFwqnIzWuVRxMdVt17SBhrhgI'
+os.environ['GOOGLE_API_KEY']='A-'
 
 # --- Model Loading ---
 # Import the necessary modules from the langchain_google_genai package.
